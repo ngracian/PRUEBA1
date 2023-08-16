@@ -1,17 +1,17 @@
 package StepsDefinitions;
 
+import Pages.GooglePage;
 import io.cucumber.java.en.*;
 
 public class GoogleStepsDefinitions {
+    GooglePage googlePage = new GooglePage();
     @Given("^Dado que el usuario abre el navegador$")
     public void dado_que_el_usuario_abre_el_navegador() {
-        // Write code here that turns the phrase above into concrete actions
-
+        googlePage.ejecutarNavegador();
     }
     @When("^Carga el sitio web$")
     public void carga_el_sitio_web() {
-        // Write code here that turns the phrase above into concrete actions
-
+        googlePage.abrirPaginaGoogle();
     }
     @Then("^El usuario da clic en la barra de busqueda$")
     public void el_usuario_da_clic_en_la_barra_de_busqueda() {
@@ -30,8 +30,7 @@ public class GoogleStepsDefinitions {
     }
     @Then("^El navegador despliega los resultados$")
     public void el_navegador_despliega_los_resultados() {
-        // Write code here that turns the phrase above into concrete actions
-
+     googlePage.terminarNavegador();
     }
 
 }
