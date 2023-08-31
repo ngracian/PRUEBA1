@@ -15,8 +15,7 @@ public class GoogleStepsDefinitions {
     }
     @Then("^El usuario da clic en la barra de busqueda$")
     public void el_usuario_da_clic_en_la_barra_de_busqueda() {
-        // Write code here that turns the phrase above into concrete actions
-
+        googlePage.clickBarraBusquedaGoogle();
     }
     @Given("^Dado ingresa la consulta de la sintaxis gherkin$")
     public void dado_ingresa_la_consulta_de_la_sintaxis_gherkin() {

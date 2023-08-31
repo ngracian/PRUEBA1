@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 public class GooglePage extends BasePage {
     private String url="https://www.google.com.mx/";
+    private String BARRA_BUSQUEDA_GOOGLE = "/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/textarea";
 
 
     /**
@@ -23,4 +24,5 @@ public class GooglePage extends BasePage {
     public void terminarNavegador(){
         cerrarNavegador();
     }
+    public void clickBarraBusquedaGoogle() {clickElement(BARRA_BUSQUEDA_GOOGLE);}
 }
