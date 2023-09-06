@@ -93,5 +93,13 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
     }
 
+    /**
+     * Método que captura la consulta en google
+     *  @param inputText el parametro tiene la consulta a realizar
+     */
+    public void sendKeys(String locator, String inputText){
+        find(locator).sendKeys(inputText);
+    }
+
 
 }//Cierre de la clase
