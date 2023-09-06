@@ -22,13 +22,13 @@ public class GoogleStepsDefinitions {
     public void dado_ingresa_la_consulta_de_la_sintaxis_gherkin(String textoBusqueda) {googlePage.capturarConsultaGoogle(textoBusqueda); }
     @When("^El usuario da clic en el boton de Buscar$")
     public void el_usuario_da_clic_en_el_boton_de_buscar() {googlePage.clickBotonBusquedaGoogle();}
-    @Then("^El navegador despliega los resultados de la busqueda de la (.+)$")
+    @Then("^El navegador despliega los resultados de la busqueda de (.+)$")
     public void el_navegador_despliega_los_resultados(String textoBuscado) {
         String resultadoEsperado = textoBuscado;
         String resultadoReal = googlePage.obtenerTextoPrimerElementoBusqueda();
-        Assert.assertTrue("Comparación de resultado esperado vs resultado real en la búsqueda: ", resultadoReal.contains(resultadoEsperado));
         System.out.println("R.E.: " + resultadoEsperado);
         System.out.println("R.R.: " + resultadoReal);
+        Assert.assertTrue("Comparación de resultado esperado vs resultado real en la búsqueda: ", resultadoReal.contains(resultadoEsperado));
         googlePage.terminarNavegador();
     }
 
