@@ -101,5 +101,9 @@ public class BasePage {
         find(locator).sendKeys(inputText);
     }
 
+    public String getText(String locator){
+        return find(locator).getText();
+    }
+
 
 }//Cierre de la clase
