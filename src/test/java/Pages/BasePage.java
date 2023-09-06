@@ -1,10 +1,14 @@
 package Pages;
 
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ser.Serializers;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.lang.reflect.Constructor;
 import java.time.Duration;
@@ -76,4 +80,26 @@ public class BasePage {
         driver.quit();
         driver = null;
     }
+
+    public void clickElement(String locator){
+        find(locator).click();
+    }
+
+    /**
+     * Método que espera hasta que aparezca el elemento locator
+     * @param locator el parámetro de la ruta del elemento a esperar
+     */
+    private WebElement find (String locator){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+    }
+
+    /**
+     * Método que captura la consulta en google
+     *  @param inputText el parametro tiene la consulta a realizar
+     */
+    public void sendKeys(String locator, String inputText){
+        find(locator).sendKeys(inputText);
+    }
+
+
 }//Cierre de la clase
