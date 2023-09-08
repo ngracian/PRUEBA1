@@ -2,6 +2,7 @@ package Pages;
 
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ser.Serializers;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -104,6 +105,8 @@ public class BasePage {
     public String getText(String locator){
         return find(locator).getText();
     }
-
+    public void sendEnterKey(String locator){
+        find(locator).sendKeys(Keys.ENTER);
+    }
 
 }//Cierre de la clase

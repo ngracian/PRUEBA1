@@ -1,5 +1,7 @@
 package Pages;
 
+import net.bytebuddy.asm.Advice;
+
 public class GooglePage extends BasePage {
     private String url="https://www.google.com.mx/";
     private String BARRA_BUSQUEDA_GOOGLE = "/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/textarea";
@@ -28,6 +30,7 @@ public class GooglePage extends BasePage {
     public void clickBarraBusquedaGoogle() {clickElement(BARRA_BUSQUEDA_GOOGLE);}
     public void capturarConsultaGoogle(String textoBusqueda){sendKeys(BARRA_BUSQUEDA_GOOGLE,textoBusqueda);}
     public void clickBotonBusquedaGoogle(){clickElement(BOTON_BUSQUEDA_GOOGLE);}
+    public void enterBusquedaGoogle(){sendEnterKey(BARRA_BUSQUEDA_GOOGLE);}
     public String obtenerTextoPrimerElementoBusqueda(){return getText(PRIMER_RESULTADO_BUSQUEDA);
     }
 }
