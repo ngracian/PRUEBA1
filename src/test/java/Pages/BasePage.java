@@ -95,6 +95,13 @@ public class BasePage {
     }
 
     /**
+     *Método que espera hasta que aparezca la lista de resultados
+     * @param selector el parametro el parámetro de la ruta del elemento a esperar en css
+     */
+    private WebElement findByCSSelector (String selector){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
+    }
+    /**
      * Método que captura la consulta en google
      *  @param inputText el parametro tiene la consulta a realizar
      */
@@ -105,8 +112,10 @@ public class BasePage {
     public String getText(String locator){
         return find(locator).getText();
     }
-    public void sendEnterKey(String locator){
+    public void sendEnterKey(String locator) {
         find(locator).sendKeys(Keys.ENTER);
     }
-
+    public void getTextByCSSelector(By selector){
+        findByCSSelector(selector).getText();
+    }
 }//Cierre de la clase
