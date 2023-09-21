@@ -3,10 +3,7 @@ package Pages;
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ser.Serializers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.Constructor;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Esta clase contiene los métodos para poder realizar acciones en un navegador
@@ -117,8 +116,8 @@ public class BasePage {
      *
      * @param selector el parametro el parámetro de la ruta del elemento a esperar en css
      */
-    private WebElement findByCSSelector(String selector) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
+    private WebElement findByCSSelector(By selector) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(selector));
     }
 
     /**
@@ -139,6 +138,42 @@ public class BasePage {
     }
 
     public void getTextByCSSelector(By selector) {
-        findByCSSelector(selector).getText();
+        try {
+            findByCSSelector(selector).getText();
+        }
+        catch (Exception e){
+            logger.error("Error en el selector CSS o al hacer clic en el elemento: " + selector,e);
+            throw new RuntimeException("No se pudo dar clic en el elemento con el selector CSS: " + selector,e);
+        }
     }
+    protected List<String> getListByCSSelector(By selector){
+        List<String> listaTextos = new ArrayList<>();
+        try{
+            List<WebElement> elementosWeb = driver.findElements(selector);
+            for (WebElement elemento:elementosWeb){
+                listaTextos.add(elemento.getText());
+            }
+        }catch (Exception e){
+            logger.error("Error al iterar sobre los elementos web con selecctor: " + selector.toString(), e);
+        }
+        return listaTextos;
+    }
+
+    protected String getTextFirstElementWeb(By selector){
+        try{
+            WebElement primerElementoBusqueda = esperaObtenerPrimerElemento(selector);
+            return waitAndGetText(primerElementoBusqueda);
+        }catch(TimeoutException e){
+            logger.error("Tiempo de espera excedido para encontrar el selector: " + selector.toString(), e);
+        }
+        catch(Exception e){
+            logger.error("Error al obtener el primer elemento con el selector: " + selector.toString(), e);
+        }
+    }
+
+    private WebElement esperaObtenerPrimerElemento(By selector){
+        
+    }
+
+
 }//Cierre de la clase
