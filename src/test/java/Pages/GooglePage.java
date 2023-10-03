@@ -1,6 +1,8 @@
 package Pages;
 
 import net.bytebuddy.asm.Advice;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -15,6 +17,8 @@ public class GooglePage extends BasePage {
     private String PRIMER_RESULTADO_BUSQUEDA = "//*[@id=\"rso\"]/div[1]/div/div/div[1]/div/div/a/h3";
     private By RESULTADOS_SELECTOR = By.cssSelector("h3");
 
+    private static final Logger logger = LogManager.getLogger(BasePage.class);
+
     /**
      * Constructor para la pagina web
      *
@@ -24,25 +28,75 @@ public class GooglePage extends BasePage {
         super(driver);
     }
     public void ejecutarNavegador(){
-        abrirNavegador();
+        try {
+            abrirNavegador();
+        }catch (Exception e){
+            logger.error("Error al abrir el navegador: " + driver.toString(), e);
+        }
     }
     public void abrirPaginaGoogle(){
-        abrirPagina(url);
+        try {
+            abrirPagina(url);
+        }catch (Exception e){
+            logger.error("Error al abrir la url: " + url, e);
+        }
     }
     public void terminarNavegador(){
-        cerrarNavegador();
-    }
-    public void clickBarraBusquedaGoogle() {clickElement(BARRA_BUSQUEDA_GOOGLE);}
-    public void capturarConsultaGoogle(String textoBusqueda){sendKeys(BARRA_BUSQUEDA_GOOGLE,textoBusqueda);}
-    public void clickBotonBusquedaGoogle(){clickElement(BOTON_BUSQUEDA_GOOGLE);}
-    public void enterBusquedaGoogle(){sendEnterKey(BARRA_BUSQUEDA_GOOGLE);}
-    public String obtenerTextoPrimerElementoBusqueda(){return getText(PRIMER_RESULTADO_BUSQUEDA);}
-    public List<String> iterarResultadosGoogle(){
-        List<String> resultados = new ArrayList<>();
-        List<WebElement> resultadosBusqueda = driver.findElements(RESULTADOS_SELECTOR);
-        for(WebElement resultadosPaginaUno  : resultadosBusqueda){
-            resultados.add(resultadosPaginaUno.getText());
+        try {
+            cerrarNavegador();
+        }catch (Exception e){
+            logger.error("Error al cerrar el navegador: " + driver.toString(), e);
         }
-        return resultados;
+    }
+    public void clickBarraBusquedaGoogle() {
+        try{
+            clickElement(BARRA_BUSQUEDA_GOOGLE);
+        }catch (Exception e){
+            logger.error("Error en la barra de busqueda: " + BARRA_BUSQUEDA_GOOGLE, e);
+        }
+    }
+    public void capturarConsultaGoogle(String textoBusqueda){
+        try{
+            sendKeys(BARRA_BUSQUEDA_GOOGLE,textoBusqueda);
+        }catch (Exception e){
+            logger.error("Error en el web element: " + BARRA_BUSQUEDA_GOOGLE, e);
+        }
+    }
+    public void clickBotonBusquedaGoogle(){
+        try{
+            clickElement(BOTON_BUSQUEDA_GOOGLE);
+        }catch (Exception e){
+            logger.error("Error en el botón de busqueda de google: " + BOTON_BUSQUEDA_GOOGLE, e);
+        }
+    }
+    public void enterBusquedaGoogle(){
+        try{
+            sendEnterKey(BARRA_BUSQUEDA_GOOGLE);
+        }catch (Exception e){
+            logger.error("Error al dar enter en la barra de busqueda: " + BARRA_BUSQUEDA_GOOGLE, e);
+        }
+    }
+    public String obtenerTextoPrimerElementoBusqueda(){
+        try {
+            return getText(PRIMER_RESULTADO_BUSQUEDA);
+        }catch (Exception e){
+            logger.error("Error al obtener primer resultado de busqueda: " + PRIMER_RESULTADO_BUSQUEDA, e);
+        }
+        //preguntar si esto es correcto, ya que pedía que indicara un return en esta parte.
+        return null;
+    }
+    public List<String> iterarResultadosGoogle(){
+        try {
+            List<String> resultados = new ArrayList<>();
+            List<WebElement> resultadosBusqueda = driver.findElements(RESULTADOS_SELECTOR);
+            for (WebElement resultadosPaginaUno : resultadosBusqueda) {
+                resultados.add(resultadosPaginaUno.getText());
+            }
+            return resultados;
+        }catch (Exception e){
+            logger.error("Error al iterar sobre los resultados web: " + driver.toString(), e);
+        }
+        //preguntar si esto es correcto, ya que pedía que indicara un return en esta parte.
+        return null;
     }
 }

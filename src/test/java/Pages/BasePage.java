@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -172,8 +173,23 @@ public class BasePage {
     }
 
     private WebElement esperaObtenerPrimerElemento(By selector){
-        
+        WebDriverWait wait = new WebDriverWait(driver, durationtimeout, durationsleep);
+        List<WebElement> elementos = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(selector));
+        if(elementos.isEmpty()){
+            throw new NoSuchElementException("No se encontro ningun elemento con el selector: " + selector.toString());
+        }
+        return elementos.get(0);
     }
 
+    private String waitAndGetText (WebElement elemento){
+        WebDriverWait wait = new WebDriverWait(driver, durationtimeout, durationsleep);
+        wait.until(new ExpectedCondition<Boolean>(){
+            public Boolean apply (WebDriver driver){
+                return !elemento.getText().trim().isEmpty();
+            }
+        }
+        );
+        return elemento.getText();
+    }
 
 }//Cierre de la clase
