@@ -64,6 +64,7 @@ public class BasePage {
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
         }
+
     }
 
     /**
@@ -123,11 +124,16 @@ public class BasePage {
 
     /**
      * Método que captura la consulta en google
-     *
      * @param inputText el parametro tiene la consulta a realizar
      */
     public void sendKeys(String locator, String inputText) {
-        find(locator).sendKeys(inputText);
+        try{
+            find(locator).sendKeys(inputText);
+        }catch (Exception e){
+            logger.error("Error al capturar el texto en el campo de busqueda: " + locator,e);
+            throw new RuntimeException("No se pudo capturar capturar el texto en el campo: " + locator,e);
+        }
+
     }
 
     public String getText(String locator) {
@@ -135,7 +141,13 @@ public class BasePage {
     }
 
     public void sendEnterKey(String locator) {
-        find(locator).sendKeys(Keys.ENTER);
+        try{
+            find(locator).sendKeys(Keys.ENTER);
+        }catch (Exception e){
+            logger.error("Error al dar clic Enter en el campo de busqueda: " + locator,e);
+            throw new RuntimeException("No se pudo capturar ENTER en el campo: " + locator,e);
+        }
+
     }
 
     public void getTextByCSSelector(By selector) {
